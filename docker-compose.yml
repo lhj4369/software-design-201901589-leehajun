@@ -21,6 +21,7 @@ services:
     environment:
       MONGODB_URI: mongodb://mongo:27017/school
       PORT: "3000"
+      JWT_SECRET: ${JWT_SECRET:-dev-only-change-me-in-production}
     ports:
       - "3000:3000"
     depends_on:
