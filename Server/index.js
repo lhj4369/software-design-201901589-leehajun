@@ -7,6 +7,8 @@ const Parent = require("./models/Parent");
 const { seedInitialData } = require("./data/seed");
 const authRoutes = require("./routes/auth");
 const teacherPortalRoutes = require("./routes/teacherPortal");
+const teacherGradesRoutes = require("./routes/teacherGrades");
+const studentPortalRoutes = require("./routes/studentPortal");
 
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI =
@@ -18,21 +20,13 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/teacher", teacherPortalRoutes);
+app.use("/api/teacher", teacherGradesRoutes);
+app.use("/api/student", studentPortalRoutes);
 
 app.get("/api/health", (_req, res) => {
   const db =
     mongoose.connection.readyState === 1 ? "connected" : "disconnected";
   res.json({ ok: true, db });
-});
-
-app.get("/api/teachers", async (_req, res) => {
-  const teachers = await Teacher.find().sort({ createdAt: -1 }).lean();
-  res.json({ teachers });
-});
-
-app.get("/api/students", async (_req, res) => {
-  const students = await Student.find().sort({ grade: 1, classRoom: 1, number: 1 }).lean();
-  res.json({ students });
 });
 
 app.get("/api/bootstrap-summary", async (_req, res) => {

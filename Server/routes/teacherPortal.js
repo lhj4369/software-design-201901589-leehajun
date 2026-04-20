@@ -42,13 +42,11 @@ router.get("/my-class-students", async (req, res) => {
 });
 
 /**
- * 학생 계정 생성 (담임이 담당하는 학년·반에 한함)
- * POST /api/teacher/students
- * body: { name, grade, classRoom, number, email, phone, birthDate: "YYYY-MM-DD" }
- */
-/**
- * 담당 반에 속한 학생 1명 조회 (성적 상세 페이지 등)
+ * 담당 반에 속한 학생 1명 조회
  * GET /api/teacher/students/:studentId
+ *
+ * 학생 계정 생성: POST /api/teacher/students
+ * body: { name, grade, classRoom, number, email, phone, birthDate: "YYYY-MM-DD" }
  */
 router.get("/students/:studentId", async (req, res) => {
   const teacher = await Teacher.findById(req.auth.userId).lean();

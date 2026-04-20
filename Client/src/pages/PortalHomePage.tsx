@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import type { ReactNode } from 'react'
 import { PageShell } from '../components/PageShell'
 import { apiFetch } from '../utils/api'
 import type { AuthUserProfile, HomeroomAssignment } from '../types/profile'
+import profilePhotoPlaceholder from '../assets/image.png'
 
 type PortalRole = 'teacher' | 'student' | 'parent'
 
@@ -40,6 +42,23 @@ function formatHomerooms(list?: HomeroomAssignment[]) {
   return list
     .map((a) => `${a.grade}학년 ${a.classRoom}반${a.isViceHomeroom ? ' (부담임)' : ''}`)
     .join(', ')
+}
+
+function ProfileHomeLayout({ children }: { children: ReactNode }) {
+  return (
+    <div className="profile-home-layout">
+      <div className="profile-photo-frame">
+        <img
+          src={profilePhotoPlaceholder}
+          alt="증명사진"
+          className="profile-photo-img"
+        />
+      </div>
+      <div className="profile-info-side">
+        <div className="info-grid">{children}</div>
+      </div>
+    </div>
+  )
 }
 
 export function PortalHomePage({ role }: PortalHomePageProps) {
@@ -81,7 +100,7 @@ export function PortalHomePage({ role }: PortalHomePageProps) {
           {error}
         </p>
       ) : profile && profile.role === 'teacher' ? (
-        <div className="info-grid">
+        <ProfileHomeLayout>
           <div className="info-item">
             <span className="info-label">이름</span>
             <strong>{profile.name}</strong>
@@ -106,9 +125,9 @@ export function PortalHomePage({ role }: PortalHomePageProps) {
             <span className="info-label">담임 학급</span>
             <strong>{formatHomerooms(profile.homeroomAssignments)}</strong>
           </div>
-        </div>
+        </ProfileHomeLayout>
       ) : profile && profile.role === 'student' ? (
-        <div className="info-grid">
+        <ProfileHomeLayout>
           <div className="info-item">
             <span className="info-label">이름</span>
             <strong>{profile.name}</strong>
@@ -133,9 +152,9 @@ export function PortalHomePage({ role }: PortalHomePageProps) {
             <span className="info-label">생년월일</span>
             <strong>{formatDate(profile.birthDate)}</strong>
           </div>
-        </div>
+        </ProfileHomeLayout>
       ) : profile && profile.role === 'parent' ? (
-        <div className="info-grid">
+        <ProfileHomeLayout>
           <div className="info-item">
             <span className="info-label">이름</span>
             <strong>{profile.name}</strong>
@@ -152,7 +171,7 @@ export function PortalHomePage({ role }: PortalHomePageProps) {
             <span className="info-label">생년월일</span>
             <strong>{formatDate(profile.birthDate)}</strong>
           </div>
-        </div>
+        </ProfileHomeLayout>
       ) : (
         <p className="profile-status">표시할 정보가 없습니다.</p>
       )}

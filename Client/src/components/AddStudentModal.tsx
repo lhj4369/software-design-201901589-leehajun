@@ -190,7 +190,7 @@ export function AddStudentModal({
               취소
             </button>
             <button type="submit" className="modal-btn primary" disabled={submitting || !current}>
-              {submitting ? '저장 중…' : '계정 만들기'}
+              {submitting ? '추가 중…' : '학생 추가'}
             </button>
           </div>
         </form>

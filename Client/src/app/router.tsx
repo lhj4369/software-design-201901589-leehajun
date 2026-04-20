@@ -6,6 +6,8 @@ import { NotFoundPage } from '../pages/NotFoundPage'
 import { PortalHomePage } from '../pages/PortalHomePage'
 import { PortalSectionPage } from '../pages/PortalSectionPage'
 import { TeacherClassStudentsPage } from '../pages/TeacherClassStudentsPage'
+import { TeacherStudentGradesPage } from '../pages/TeacherStudentGradesPage'
+import { StudentGradesPage } from '../pages/StudentGradesPage'
 
 export const router = createBrowserRouter([
   { path: '/', element: <Navigate to="/login" replace /> },
@@ -28,11 +30,16 @@ export const router = createBrowserRouter([
       { index: true, element: <Navigate to="/teacher/home" replace /> },
       { path: 'home', element: <PortalHomePage role="teacher" /> },
       {
+        path: 'grades/:studentId',
+        element: <TeacherStudentGradesPage />,
+      },
+      {
         path: 'grades',
         element: (
           <TeacherClassStudentsPage
+            variant="grades"
             title="성적관리"
-            description="담당 학급 학생 목록과 성적 입력(추후 연동). 학생 계정을 추가하면 목록에 표시됩니다."
+            description="학생 행을 누르면 해당 학생의 학년·학기별 성적을 열람·수정할 수 있습니다."
           />
         ),
       },
@@ -40,6 +47,7 @@ export const router = createBrowserRouter([
         path: 'records',
         element: (
           <TeacherClassStudentsPage
+            variant="records"
             title="학생부 관리"
             description="담당 학급 학생 정보 관리. 학생 추가 시 학생부·로그인에 동일하게 반영됩니다."
           />
@@ -77,12 +85,7 @@ export const router = createBrowserRouter([
       { path: 'home', element: <PortalHomePage role="student" /> },
       {
         path: 'grades',
-        element: (
-          <PortalSectionPage
-            title="성적"
-            description="학생 본인의 성적 조회 화면"
-          />
-        ),
+        element: <StudentGradesPage />,
       },
       {
         path: 'records',

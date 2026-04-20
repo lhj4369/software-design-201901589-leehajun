@@ -60,6 +60,7 @@ body {
 
 .content {
   padding: 24px;
+  min-width: 0;
 }
 
 .topbar {
@@ -142,6 +143,8 @@ body {
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 20px;
+  width: 100%;
+  min-width: 0;
 }
 
 .page-header h2 {
@@ -274,6 +277,47 @@ body {
   text-decoration: underline;
 }
 
+.profile-home-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(16px, 3vw, 28px);
+  align-items: flex-start;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.profile-photo-frame {
+  flex-shrink: 0;
+  width: clamp(128px, 22vw, 220px);
+  aspect-ratio: 25 / 30;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f3f4f6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.profile-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.profile-info-side {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+.profile-info-side .info-grid {
+  margin-top: 0;
+  width: 100%;
+  min-width: 0;
+  /* 항상 2열 — 6개 항목이면 3행×2열, 창 너비에 맞춰 칸만 늘어남 */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .info-grid {
   margin-top: 16px;
   display: grid;
@@ -350,6 +394,160 @@ body {
 
 .data-table tbody tr:nth-child(even) {
   background: #fafafa;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.clickable-row:hover {
+  background: #eff6ff !important;
+}
+
+.grade-matrix-scroll {
+  overflow-x: auto;
+  margin-top: 4px;
+}
+
+.grade-matrix-table {
+  min-width: 640px;
+}
+
+.grade-matrix-corner {
+  min-width: 108px;
+  background: #f9fafb;
+}
+
+.grade-matrix-rowhead {
+  text-align: left;
+  font-weight: 600;
+  background: #f9fafb;
+  color: #374151;
+  white-space: nowrap;
+}
+
+.grade-matrix-table td .grade-input {
+  width: 100%;
+  min-width: 64px;
+  max-width: 96px;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  padding: 0 8px;
+}
+
+/** 좌측: 레이더, 우측: 학년·학기 */
+.grade-radar-toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(168px, 240px);
+  gap: 24px;
+  align-items: start;
+  margin-bottom: 20px;
+}
+
+.grade-radar-toolbar-left {
+  min-width: 0;
+}
+
+.grade-radar-toolbar-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.grade-toolbar-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 220px;
+}
+
+.grade-chart-caption {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  text-align: left;
+}
+
+.grade-radar-box {
+  width: 100%;
+  min-height: 280px;
+  max-width: 400px;
+}
+
+.grade-table-only-wrap {
+  margin-top: 4px;
+}
+
+.grade-empty-block {
+  margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+  .grade-radar-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .grade-radar-toolbar-right {
+    justify-content: flex-start;
+  }
+
+  .grade-toolbar-controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: none;
+    gap: 16px;
+  }
+
+  .grade-radar-box {
+    max-width: none;
+  }
+}
+
+.grade-select {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.grade-select select {
+  min-width: 140px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  padding: 0 10px;
+  background: #fff;
+}
+
+.grade-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.student-grade-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin: 0 0 12px;
+  font-size: 15px;
+  color: #374151;
+}
+
+.student-grade-meta span::after {
+  content: ' ·';
+  margin-left: 4px;
+  color: #cbd5e1;
+}
+
+.student-grade-meta span:last-child::after {
+  content: '';
 }
 
 .modal-backdrop {
@@ -513,5 +711,20 @@ body {
 
   .info-grid {
     grid-template-columns: 1fr;
+  }
+
+  .profile-home-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .profile-photo-frame {
+    width: min(200px, 55vw);
+    align-self: center;
+  }
+
+  /* 프로필 홈은 다른 페이지의 1열 규칙을 쓰지 않고 2열 유지 */
+  .profile-info-side .info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

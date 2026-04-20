@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { PageShell } from '../components/PageShell'
 import { AddStudentModal } from '../components/AddStudentModal'
 import { apiFetch } from '../utils/api'
@@ -7,6 +8,8 @@ import type { HomeroomAssignment } from '../types/profile'
 type TeacherClassStudentsPageProps = {
   title: string
   description: string
+  /** 성적 탭에서만 행 클릭 시 성적 상세로 이동 */
+  variant?: 'grades' | 'records'
 }
 
 type ApiStudent = {
@@ -30,7 +33,12 @@ function formatBirth(iso: string) {
   })
 }
 
-export function TeacherClassStudentsPage({ title, description }: TeacherClassStudentsPageProps) {
+export function TeacherClassStudentsPage({
+  title,
+  description,
+  variant = 'records',
+}: TeacherClassStudentsPageProps) {
+  const navigate = useNavigate()
   const [students, setStudents] = useState<ApiStudent[]>([])
   const [assignments, setAssignments] = useState<HomeroomAssignment[]>([])
   const [loading, setLoading] = useState(true)
@@ -98,7 +106,8 @@ export function TeacherClassStudentsPage({ title, description }: TeacherClassStu
           <table className="data-table">
             <thead>
               <tr>
-                <th>학년·반</th>
+                <th>학년</th>
+                <th>반</th>
                 <th>번호</th>
                 <th>이름</th>
                 <th>이메일</th>
@@ -108,10 +117,17 @@ export function TeacherClassStudentsPage({ title, description }: TeacherClassStu
             </thead>
             <tbody>
               {students.map((s) => (
-                <tr key={s._id}>
-                  <td>
-                    {s.grade}학년 {s.classRoom}반
-                  </td>
+                <tr
+                  key={s._id}
+                  className={variant === 'grades' ? 'clickable-row' : undefined}
+                  onClick={
+                    variant === 'grades'
+                      ? () => navigate(`/teacher/grades/${s._id}`)
+                      : undefined
+                  }
+                >
+                  <td>{s.grade}</td>
+                  <td>{s.classRoom}</td>
                   <td>{s.number}</td>
                   <td>{s.name}</td>
                   <td>{s.email}</td>
