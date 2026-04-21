@@ -1,16 +1,14 @@
 const express = require("express");
 const Student = require("../models/Student");
+const Teacher = require("../models/Teacher");
 const GradeRecord = require("../models/GradeRecord");
+const StudentRecord = require("../models/StudentRecord");
 const { requireAuth, requireRole } = require("../middleware/requireAuth");
 
 const router = express.Router();
 
 router.use(requireAuth, requireRole("student"));
 
-/**
- * GET /api/student/grades?grade=1&semester=1
- * 본인 학년 이하(예: 2학년 재학 시 1·2학년) 성적만 조회 가능
- */
 router.get("/grades", async (req, res) => {
   const g = Number(req.query.grade);
   const sem = Number(req.query.semester);
@@ -40,6 +38,31 @@ router.get("/grades", async (req, res) => {
   return res.json({
     studentGrade: student.grade,
     record,
+  });
+});
+
+router.get("/record", async (req, res) => {
+  const student = await Student.findById(req.auth.userId).lean();
+  if (!student) {
+    return res.status(404).json({ error: "학생을 찾을 수 없습니다." });
+  }
+
+  const [record, gradeRecords, homeroomTeacher] = await Promise.all([
+    StudentRecord.findOne({ studentId: student._id }).lean(),
+    GradeRecord.find({ studentId: student._id }).sort({ grade: 1, semester: 1 }).lean(),
+    Teacher.findOne({
+      homeroomAssignments: {
+        $elemMatch: { grade: student.grade, classRoom: student.classRoom },
+      },
+    })
+      .select("name")
+      .lean(),
+  ]);
+
+  return res.json({
+    student: { ...student, homeroomTeacherName: homeroomTeacher?.name || null },
+    record,
+    gradeRecords,
   });
 });
 

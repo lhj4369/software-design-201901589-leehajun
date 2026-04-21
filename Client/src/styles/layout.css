@@ -728,3 +728,222 @@ body {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+
+.record-sections {
+  display: grid;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.record-card {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.record-card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.record-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.record-textarea {
+  width: 100%;
+  min-height: 88px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  padding: 10px;
+  resize: vertical;
+}
+
+.record-table .triple-inputs {
+  display: grid;
+  grid-template-columns: repeat(3, 56px);
+  gap: 4px;
+}
+
+.tiny-input {
+  width: 56px;
+  height: 34px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  padding: 0 6px;
+}
+
+.info-item strong input,
+.info-item strong select,
+.record-card input,
+.record-card select {
+  width: 100%;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  padding: 0 8px;
+}
+
+
+.record-top-layout {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.record-top-layout .profile-photo-frame {
+  width: auto;
+  height: 100%;
+  min-height: 170px;
+  aspect-ratio: 25 / 30;
+}
+
+.record-top-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.record-top-table {
+  width: 100%;
+  margin: 0;
+  min-height: 170px;
+}
+
+.record-top-table td,
+.record-top-table th {
+  text-align: center;
+  padding: 14px 12px;
+  line-height: 1.35;
+}
+
+.record-basic-table th {
+  background: #f9fafb;
+  width: 92px;
+  white-space: nowrap;
+}
+
+.record-basic-table td {
+  min-width: 120px;
+}
+
+.record-inline-value {
+  display: inline-block;
+  margin-left: 8px;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .record-top-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .record-top-table {
+    max-width: none;
+  }
+
+  .record-top-layout .profile-photo-frame {
+    width: min(200px, 60vw);
+    height: auto;
+    min-height: 0;
+    align-self: center;
+  }
+}
+
+
+.record-academic-table th {
+  width: 120px;
+  background: #f9fafb;
+  white-space: nowrap;
+}
+
+.record-academic-table td {
+  min-height: 42px;
+}
+
+
+.award-remove-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  background: #fff1f2;
+  color: #b91c1c;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.award-remove-btn:hover {
+  background: #ffe4e6;
+}
+
+
+.record-page-head {
+  margin: 0 0 8px;
+}
+
+.record-page-head h2 {
+  margin: 0;
+  text-align: center;
+  font-size: 34px;
+  letter-spacing: 0.5px;
+}
+
+.record-sub-head {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.record-school-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.record-back-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+
+.record-card .data-table {
+  font-size: 15px;
+}
+
+.record-card .data-table th,
+.record-card .data-table td {
+  padding: 12px 10px;
+}
+
+
+.record-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.record-preline {
+  white-space: pre-line;
+}
+
+
+.record-grade-card {
+  margin-top: 14px;
+}
+
+
+.record-top-actions-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 4px;
+}

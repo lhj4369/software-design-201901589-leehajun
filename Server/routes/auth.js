@@ -89,6 +89,8 @@ function buildProfile(doc, role) {
       phone: doc.phone,
       subject: doc.subject,
       birthDate: doc.birthDate,
+      gender: doc.gender || null,
+      address: doc.address || "",
       homeroomAssignments: doc.homeroomAssignments || [],
     };
   }
@@ -103,6 +105,8 @@ function buildProfile(doc, role) {
       classRoom: doc.classRoom,
       number: doc.number,
       birthDate: doc.birthDate,
+      gender: doc.gender || null,
+      address: doc.address || "",
     };
   }
   if (role === "parent") {
@@ -113,6 +117,8 @@ function buildProfile(doc, role) {
       email: doc.email,
       phone: doc.phone,
       birthDate: doc.birthDate,
+      gender: doc.gender || null,
+      address: doc.address || "",
       childStudentIds: doc.childStudentIds || [],
     };
   }

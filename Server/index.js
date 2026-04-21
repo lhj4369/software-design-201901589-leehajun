@@ -9,6 +9,7 @@ const authRoutes = require("./routes/auth");
 const teacherPortalRoutes = require("./routes/teacherPortal");
 const teacherGradesRoutes = require("./routes/teacherGrades");
 const studentPortalRoutes = require("./routes/studentPortal");
+const teacherRecordsRoutes = require("./routes/teacherRecords");
 
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI =
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/teacher", teacherPortalRoutes);
 app.use("/api/teacher", teacherGradesRoutes);
+app.use("/api/teacher", teacherRecordsRoutes);
 app.use("/api/student", studentPortalRoutes);
 
 app.get("/api/health", (_req, res) => {

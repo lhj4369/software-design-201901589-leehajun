@@ -44,9 +44,6 @@ router.get("/my-class-students", async (req, res) => {
 /**
  * 담당 반에 속한 학생 1명 조회
  * GET /api/teacher/students/:studentId
- *
- * 학생 계정 생성: POST /api/teacher/students
- * body: { name, grade, classRoom, number, email, phone, birthDate: "YYYY-MM-DD" }
  */
 router.get("/students/:studentId", async (req, res) => {
   const teacher = await Teacher.findById(req.auth.userId).lean();
@@ -75,9 +72,27 @@ router.get("/students/:studentId", async (req, res) => {
   return res.json({ student });
 });
 
+/**
+ * 학생 계정 생성
+ * POST /api/teacher/students
+ */
 router.post("/students", async (req, res) => {
-  const { name, grade, classRoom, number, email, phone, birthDate } =
-    req.body || {};
+  const {
+    name,
+    grade,
+    classRoom,
+    number,
+    email,
+    phone,
+    birthDate,
+    gender,
+    address,
+    fatherName,
+    fatherBirthDate,
+    motherName,
+    motherBirthDate,
+    residentId,
+  } = req.body || {};
 
   if (
     !name ||
@@ -86,12 +101,22 @@ router.post("/students", async (req, res) => {
     !number ||
     !email ||
     !phone ||
-    !birthDate
+    !birthDate ||
+    !gender ||
+    !address ||
+    !residentId ||
+    !fatherName ||
+    !fatherBirthDate ||
+    !motherName ||
+    !motherBirthDate
   ) {
     return res.status(400).json({
       error:
-        "name, grade, classRoom, number, email, phone, birthDate(YYYY-MM-DD)가 모두 필요합니다.",
+        "name, grade, classRoom, number, email, phone, birthDate, gender, address, residentId, fatherName, fatherBirthDate, motherName, motherBirthDate가 모두 필요합니다.",
     });
+  }
+  if (!["male", "female"].includes(String(gender))) {
+    return res.status(400).json({ error: "gender는 male/female만 가능합니다." });
   }
 
   const teacher = await Teacher.findById(req.auth.userId).lean();
@@ -111,9 +136,11 @@ router.post("/students", async (req, res) => {
   }
 
   const birth = parseIsoDateToUtc(String(birthDate));
-  if (!birth) {
+  const fatherBirth = parseIsoDateToUtc(String(fatherBirthDate));
+  const motherBirth = parseIsoDateToUtc(String(motherBirthDate));
+  if (!birth || !fatherBirth || !motherBirth) {
     return res.status(400).json({
-      error: "birthDate는 YYYY-MM-DD 형식이어야 합니다.",
+      error: "birthDate/fatherBirthDate/motherBirthDate는 YYYY-MM-DD 형식이어야 합니다.",
     });
   }
 
@@ -124,6 +151,13 @@ router.post("/students", async (req, res) => {
     const student = await Student.create({
       name: String(name).trim(),
       birthDate: birth,
+      gender: String(gender),
+      residentId: String(residentId).trim(),
+      address: String(address).trim(),
+      fatherName: String(fatherName).trim(),
+      fatherBirthDate: fatherBirth,
+      motherName: String(motherName).trim(),
+      motherBirthDate: motherBirth,
       number: numStr,
       grade: g,
       classRoom: c,

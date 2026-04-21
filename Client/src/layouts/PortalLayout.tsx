@@ -16,15 +16,15 @@ type NavItem = {
 const navConfig: Record<PortalRole, NavItem[]> = {
   teacher: [
     { to: '/teacher/home', label: '홈' },
-    { to: '/teacher/grades', label: '성적관리' },
     { to: '/teacher/records', label: '학생부 관리' },
+    { to: '/teacher/grades', label: '성적관리' },
     { to: '/teacher/feedback', label: '피드백' },
     { to: '/teacher/counseling', label: '상담' },
   ],
   student: [
     { to: '/student/home', label: '홈' },
-    { to: '/student/grades', label: '성적' },
     { to: '/student/records', label: '학생부' },
+    { to: '/student/grades', label: '성적' },
     { to: '/student/feedback', label: '피드백' },
     { to: '/student/counseling', label: '상담' },
   ],

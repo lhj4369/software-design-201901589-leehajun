@@ -8,6 +8,8 @@ import { PortalSectionPage } from '../pages/PortalSectionPage'
 import { TeacherClassStudentsPage } from '../pages/TeacherClassStudentsPage'
 import { TeacherStudentGradesPage } from '../pages/TeacherStudentGradesPage'
 import { StudentGradesPage } from '../pages/StudentGradesPage'
+import { TeacherStudentRecordPage } from '../pages/TeacherStudentRecordPage'
+import { StudentRecordPage } from '../pages/StudentRecordPage'
 
 export const router = createBrowserRouter([
   { path: '/', element: <Navigate to="/login" replace /> },
@@ -34,6 +36,10 @@ export const router = createBrowserRouter([
         element: <TeacherStudentGradesPage />,
       },
       {
+        path: 'records/:studentId',
+        element: <TeacherStudentRecordPage />,
+      },
+      {
         path: 'grades',
         element: (
           <TeacherClassStudentsPage
@@ -49,7 +55,7 @@ export const router = createBrowserRouter([
           <TeacherClassStudentsPage
             variant="records"
             title="학생부 관리"
-            description="담당 학급 학생 정보 관리. 학생 추가 시 학생부·로그인에 동일하게 반영됩니다."
+            description="학생 행을 누르면 학생부 열람/수정 화면으로 이동합니다."
           />
         ),
       },
@@ -89,12 +95,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'records',
-        element: (
-          <PortalSectionPage
-            title="학생부"
-            description="학생 본인의 학생부 조회 화면"
-          />
-        ),
+        element: <StudentRecordPage />,
       },
       {
         path: 'feedback',

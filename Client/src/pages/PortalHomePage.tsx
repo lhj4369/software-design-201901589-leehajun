@@ -152,6 +152,10 @@ export function PortalHomePage({ role }: PortalHomePageProps) {
             <span className="info-label">생년월일</span>
             <strong>{formatDate(profile.birthDate)}</strong>
           </div>
+          <div className="info-item">
+            <span className="info-label">주소</span>
+            <strong>{profile.address || '—'}</strong>
+          </div>
         </ProfileHomeLayout>
       ) : profile && profile.role === 'parent' ? (
         <ProfileHomeLayout>

@@ -25,6 +25,8 @@ export type StudentProfile = {
   classRoom?: number
   number?: string
   birthDate?: string
+  gender?: 'male' | 'female' | null
+  address?: string
 }
 
 export type ParentProfile = {

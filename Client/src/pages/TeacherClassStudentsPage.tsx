@@ -73,22 +73,25 @@ export function TeacherClassStudentsPage({
   }, [load])
 
   const canAdd = assignments.length > 0
+  const showAddButton = variant !== 'grades'
 
   return (
     <PageShell title={title} description={description}>
-      <div className="teacher-toolbar">
-        <button
-          type="button"
-          className="add-student-btn"
-          disabled={!canAdd}
-          onClick={() => setModalOpen(true)}
-        >
-          + 학생 추가
-        </button>
-        {!canAdd ? (
-          <span className="toolbar-note">담임 학급이 등록되어 있어야 학생을 추가할 수 있습니다.</span>
-        ) : null}
-      </div>
+      {showAddButton ? (
+        <div className="teacher-toolbar">
+          <button
+            type="button"
+            className="add-student-btn"
+            disabled={!canAdd}
+            onClick={() => setModalOpen(true)}
+          >
+            + 학생 추가
+          </button>
+          {!canAdd ? (
+            <span className="toolbar-note">담임 학급이 등록되어 있어야 학생을 추가할 수 있습니다.</span>
+          ) : null}
+        </div>
+      ) : null}
 
       {loading ? (
         <p className="profile-status">불러오는 중…</p>
@@ -119,11 +122,13 @@ export function TeacherClassStudentsPage({
               {students.map((s) => (
                 <tr
                   key={s._id}
-                  className={variant === 'grades' ? 'clickable-row' : undefined}
+                  className={variant !== 'records' && variant !== 'grades' ? undefined : 'clickable-row'}
                   onClick={
                     variant === 'grades'
                       ? () => navigate(`/teacher/grades/${s._id}`)
-                      : undefined
+                      : variant === 'records'
+                        ? () => navigate(`/teacher/records/${s._id}`)
+                        : undefined
                   }
                 >
                   <td>{s.grade}</td>
@@ -140,12 +145,14 @@ export function TeacherClassStudentsPage({
         </div>
       )}
 
-      <AddStudentModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onCreated={() => void load()}
-        assignments={assignments}
-      />
+      {showAddButton ? (
+        <AddStudentModal
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          onCreated={() => void load()}
+          assignments={assignments}
+        />
+      ) : null}
     </PageShell>
   )
 }
