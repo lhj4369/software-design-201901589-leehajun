@@ -17,6 +17,7 @@ services:
     build:
       context: ./Server
       dockerfile: Dockerfile
+      network: host
     restart: unless-stopped
     environment:
       MONGODB_URI: mongodb://mongo:27017/school
@@ -43,6 +44,20 @@ services:
       - "8080:80"
     depends_on:
       - server
+
+
+  mongo-express:
+    image: mongo-express:1.0.2
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: ${ME_CONFIG_BASICAUTH_USERNAME:-admin}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${ME_CONFIG_BASICAUTH_PASSWORD:-admin1234}
+    ports:
+      - "8081:8081"
+    depends_on:
+      mongo:
+        condition: service_healthy
 
 volumes:
   mongo_data:
